@@ -1,6 +1,6 @@
 ---
 applications:
 - name: spring-music
-  memory: 512M
+  memory: 1024M
   instances: 1
   host: tsgspm
