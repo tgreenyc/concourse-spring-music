@@ -43,8 +43,8 @@ jobs:
     - task: verify
       file: git-repo/ci/tasks/verify-test.yml
       params:
-        # tsg-spring-music-test.cfapps.haas-46.pez.pivotal.io
-        CONCOURSE_DEMO_URL: http://tg-spring-music-{{CF_TEST_SPACE}}.cfapps.io
+        # tsg-spring-music-test.cfapps.io
+        CONCOURSE_DEMO_URL: http://tsg-spring-music-{{CF_TEST_SPACE}}.cfapps.io
 
   - name: promote-to-uat
     serial_groups: [version]
