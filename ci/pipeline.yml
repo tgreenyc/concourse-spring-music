@@ -20,11 +20,7 @@ jobs:
       timeout: 5m
     - put: release-candidate
       params:
-        file: artifact-dir/spring-music*.war
-    - put: git-repo
-      params:
-        repository: git-repo
-        tag: version/number
+        file: artifact-dir/spring-music-*.war
     - put: version
       params: {file: version/number}
 
@@ -43,11 +39,12 @@ jobs:
       params:
         manifest: git-repo/manifest-test.yml
         current_app_name: spring-music-test
-        path: release-candidate/spring-music*.war
+        path: release-candidate/spring-music-*.war
     - task: verify
       file: git-repo/ci/tasks/verify-test.yml
       params:
-        CONCOURSE_DEMO_URL: {{VERIFY_URL}}
+        # tsg-spring-music-test.cfapps.haas-46.pez.pivotal.io
+        CONCOURSE_DEMO_URL: http://tg-spring-music-{{CF_TEST_SPACE}}.cfapps.io
 
   - name: promote-to-uat
     serial_groups: [version]
@@ -64,7 +61,7 @@ jobs:
       params:
         manifest: git-repo/manifest-uat.yml
         current_app_name: spring-music-uat
-        path: release-candidate/spring-music*.war
+        path: release-candidate/spring-music-*.war
 
   - name: ship-it
     serial_groups: [version]
@@ -118,7 +115,6 @@ resources:
   source:
     uri: {{GIT_REPO}}
     branch: master
-    private_key: {{GIT_PRIVATE_KEY}}
 
 - name: deploy-test-app
   type: cf
